@@ -29,7 +29,7 @@ pip install -r requirements.txt
 
 ### Running the Application
 
-0. Ensure Ollama and the your model of choice are installed.
+0. Ensure Ollama (https://ollama.com/download) and your model of choice are installed, e.g. Llama3.2 or Deepseek.
 
 Set the relevant environment variable for your model name, e.g.
 ```bash
