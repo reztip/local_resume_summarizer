@@ -7,11 +7,11 @@ def main():
     manager = db_manager.DBManager()
     with manager:
         manager.global_init()
+
     if not os.path.exists("uploads"):
         os.makedirs("uploads")
 
-    st.set_page_config(page_title="PDF Upload App",
-                      layout="centered")
+    st.set_page_config(page_title="Resume Summarizer", layout="centered")
 
     st.title("Resume and Job Description Summarizer")
 
@@ -20,7 +20,7 @@ def main():
         job_description = st.text_area(
             "Paste the job description here",
             height=300,
-            help="You can paste the job description text here, including rich text from PDFs or Word files."
+            help="You can paste the job description text here"
         )
 
     with st.expander("Upload Resume"):
@@ -30,11 +30,11 @@ def main():
                 type=['pdf'],
                 accept_multiple_files=False,
                 key=None,
-                help="Upload one or more PDF files to process"
+                help="Upload a resume in PDF format to summarize it."
             )
 
             if uploaded_file is not None:
-                # Save uploaded file
+                # Save uploaded file, assumes uniqueness
                 filepath = os.path.join("uploads", uploaded_file.name)
                 def save_uploaded_file(uploaded_file):
                     with open(filepath, "wb") as f:
@@ -52,8 +52,6 @@ def main():
 
     if len(st.session_state) > 0 and 'uploaded_files' in st.session_state:
         st.subheader("Uploaded Files")
-        for file in st.session_state.uploaded_files:
-            st.write(f"- {file['name']} ({file['size']} bytes)")
 
 if __name__ == "__main__":
     main()
