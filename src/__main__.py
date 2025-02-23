@@ -36,9 +36,11 @@ def main():
 
                 file = save_uploaded_file(uploaded_file)
                 path = os.path.join("uploads", file.name)   
-                summary = ""
-                manager.insert((summary, path))
+                with st.spinner("Summarizing Resume...", show_time=True):
+                    summary = summarizer.summarize_pdf(path)
+                    manager.insert((summary, path))
                 st.success(f"File {file.name} was successfully uploaded!")
+                st.markdown(summary)
 
     if len(st.session_state) > 0 and 'uploaded_files' in st.session_state:
         st.subheader("Uploaded Files")

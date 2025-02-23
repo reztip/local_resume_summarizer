@@ -1,0 +1,9 @@
+langchain
+langchain_community
+python-multipart
+python-Levenshtein
+llama-cpp-python
+asyncio
+PyPDF2
+streamlit
+sqlite
