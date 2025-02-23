@@ -1,7 +1,7 @@
 import sqlite3
 class DBManager:
     def __init__(self):
-        self.db_path  = 'demo.db'
+        self.db_path  = 'local_files.db'
 
     def query(self, query):
         cursor = self.db.cursor()
@@ -11,7 +11,10 @@ class DBManager:
     def insert(self, values):
         cursor = self.db.cursor()
         values = [None] + list(values)
-        prepared_statement = "INSERT INTO summarized (id, summary, file_path) VALUES (?, ?, ?) ON CONFLICT(file_path) DO UPDATE SET summary=excluded.summary"
+        prepared_statement = """ 
+        INSERT INTO summarized (id, summary, file_path) VALUES (?, ?, ?) 
+        ON CONFLICT(file_path) DO UPDATE SET summary=excluded.summary;
+        """
         insert = cursor.execute(prepared_statement, values)
         self.db.commit()
         return insert
@@ -26,5 +29,5 @@ class DBManager:
         self.db = sqlite3.connect(self.db_path)
         return self
     
-    def __exit__(self, a, b, c):
+    def __exit__(self, exc_type, exc_value, traceback):
         self.db.close()
